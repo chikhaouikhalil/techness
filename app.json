@@ -1,8 +1,17 @@
 {
   "expo": {
-    "name": "techness",
+    "name": "Techness",
     "slug": "techness",
     "version": "1.0.0",
+    "jsEngine": "hermes",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you add images to your events."
+        }
+      ]
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,20 +20,36 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "scheme": "com.formatika.techness",
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.formatika.techness",
+      "icon": "./assets/icon.png",
+      "buildNumber": "1"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "package": "com.formatika.techness",
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "pan",
+      "icon": "./assets/icon.png",
+      "permissions": ["android.permission.RECORD_AUDIO"]
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#f97316"
+    },
+    "androidNavigationBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#f97316"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c6a5f2a2-f587-4d30-8c6b-4ae30f1e5352"
+      }
     }
   }
 }
