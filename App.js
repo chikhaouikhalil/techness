@@ -12,12 +12,71 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import Options from "./screens/Options";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Reports from "./screens/Reports";
+import {
+  SimpleLineIcons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import TabBarComponent from "./components/elements/TabBarComponent";
 
 SplashScreen.preventAutoHideAsync();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const TabNavigation = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBar={(props) => <TabBarComponent {...props} />}
+    >
+      <Tab.Screen
+        options={{
+          title: "Sales",
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name="bike-scooter" size={size} color={color} />
+          ),
+        }}
+        name="Home"
+        component={Home}
+      />
+      <Tab.Screen
+        options={{
+          title: "Reports",
+          tabBarIcon: ({ size, color }) => (
+            <MaterialCommunityIcons
+              name="account-clock-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+        name="Reports"
+        component={Reports}
+      />
+      <Tab.Screen
+        options={{
+          title: "Options",
+          tabBarIcon: ({ size, color }) => (
+            <MaterialCommunityIcons
+              name="account-clock-outline"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+        name="Options"
+        component={Options}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
-
   const [fontsLoaded] = useFonts({
     Black: require("./fonts/Montserrat-Black.ttf"),
     Bold: require("./fonts/Montserrat-Bold.ttf"),
@@ -52,10 +111,14 @@ export default function App() {
         <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="SignIn" component={SignIn} />
               <Stack.Screen
-                name="Home"
-                component={Home}
+                name="SignIn"
+                component={SignIn}
+                options={{ animation: "slide_from_left" }}
+              />
+              <Stack.Screen
+                name="TabNavigation"
+                component={TabNavigation}
                 options={{ animation: "slide_from_right" }}
               />
             </Stack.Navigator>

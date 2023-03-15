@@ -1,6 +1,5 @@
 import { Button, StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect } from "react";
-import * as AuthSession from "expo-auth-session";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -9,30 +8,12 @@ import { setUserData } from "../redux/Actions";
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
-  // logout
-  const logoutHandler = async () => {
-    const jsonValue = await AsyncStorage.getItem("auth");
-    const authFromJson = JSON.parse(jsonValue);
-    await AuthSession.revokeAsync(
-      {
-        token: authFromJson.accessToken,
-      },
-      {
-        revocationEndpoint: "https://oauth2.googleapis.com/revoke",
-      }
-    );
-    dispatch(setUserData({}));
-    await AsyncStorage.removeItem("auth");
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "SignIn" }],
-    });
-  };
+
   // get user info
   const getUserData = async () => {
     const jsonValue = await AsyncStorage.getItem("auth");
     const authFromJson = JSON.parse(jsonValue);
-    console.log("auth when getting data from home", authFromJson);
+    //  console.log("auth when getting data from home", authFromJson);
     let userInfoResponse = await fetch(
       "https://www.googleapis.com/userinfo/v2/me",
       {
@@ -68,7 +49,11 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.containter}>
       {showUserData()}
-      <Button title="logout" onPress={logoutHandler} />
+
+      <Button
+        title="to options"
+        onPress={() => navigation.navigate("Options")}
+      />
     </View>
   );
 };
